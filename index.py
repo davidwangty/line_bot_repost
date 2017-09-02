@@ -72,7 +72,7 @@ def handel_message(event):
 
             for group in Group:
                 if group != group_id:
-                    message = "{index}組 【{name}】{message}".format(index = group_name[index],
+                    message = "{index}組 【{name}】 {message}".format(index = group_name[index],
                                                                                  name = profile.display_name,
                                                                                  message = event.message.text)
                     line_bot_api.push_message(
