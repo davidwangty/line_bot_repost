@@ -22,6 +22,9 @@ try:
     ChannelSecret = os.environ["ChannelSecret"]
     ChannelID = os.environ["UserID"]
     Group = []
+    Group.append(os.environ["Group1"])
+    Group.append(os.environ["Group2"])
+    Group.append(os.environ["Group3"])
 except Exception as e:
     print(e)
 
@@ -29,6 +32,8 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(AccessToken)
 handler = WebhookHandler(ChannelSecret)
+
+group_name = ["A", "B", "C"]
 
 # Webhook 處理 驗證後交給hander
 @app.route("/callback", methods=['POST'])
@@ -67,7 +72,7 @@ def handel_message(event):
 
             for group in Group:
                 if group != group_id:
-                    message = "轉貼自第{index}組 【{name}】：\n{message}".format(index = index + 2,
+                    message = "轉貼自第{index}組 【{name}】：\n{message}".format(index = group_name[index],
                                                                                  name = profile.display_name,
                                                                                  message = event.message.text)
                     line_bot_api.push_message(
