@@ -25,7 +25,6 @@ try:
     Group.append(os.environ["Group1"])
     Group.append(os.environ["Group2"])
     Group.append(os.environ["Group3"])
-    Group.append(os.environ["Group4"])
 except Exception as e:
     print(e)
 
