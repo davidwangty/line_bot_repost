@@ -22,9 +22,6 @@ try:
     ChannelSecret = os.environ["ChannelSecret"]
     ChannelID = os.environ["UserID"]
     Group = []
-    Group.append(os.environ["Group1"])
-    Group.append(os.environ["Group2"])
-    Group.append(os.environ["Group3"])
 except Exception as e:
     print(e)
 
