@@ -56,25 +56,28 @@ def callback():
 
 @handler.add(MessageEvent)
 def handel_message(event):
-    print("訊息:", type(event))
-    print(event)
+    print("訊息:", event)
 
     if event.message.type == "text":
         if event.source.type is "group" and event.source.group_id in Group:
-            user_id = event.source.user_id
             group_id = event.source.group_id
-            response = line_bot_api._get(
-                '/v2/bot/group/{group_id}/member/{user_id}'.format(group_id=group_id, user_id=user_id),
-                timeout=None
-            )
-            profile = responses.Profile.new_from_json_dict(response.json)
+            if event.source.user_id:
+                user_id = event.source.user_id
+                response = line_bot_api._get(
+                    '/v2/bot/group/{group_id}/member/{user_id}'.format(group_id=group_id, user_id=user_id),
+                    timeout=None
+                )
+                profile = responses.Profile.new_from_json_dict(response.json)
+                name = profile.name
+            else:
+                name = ""
             index = Group.index(group_id)
+            message = "{index}組 【{name}】 {message}".format(index = group_name[index],
+                                                                                 name = name,
+                                                                                 message = event.message.text)
 
             for group in Group:
                 if group != group_id:
-                    message = "{index}組 【{name}】 {message}".format(index = group_name[index],
-                                                                                 name = profile.display_name,
-                                                                                 message = event.message.text)
                     line_bot_api.push_message(
                             group,
                             TextSendMessage(text=message))
