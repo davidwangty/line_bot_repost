@@ -61,6 +61,7 @@ def handel_message(event):
     if event.message.type == "text":
         if event.source.type is "group" and event.source.group_id in Group:
             group_id = event.source.group_id
+            index = Group.index(group_id)
             if event.source.user_id:
                 user_id = event.source.user_id
                 response = line_bot_api._get(
@@ -69,12 +70,12 @@ def handel_message(event):
                 )
                 profile = responses.Profile.new_from_json_dict(response.json)
                 name = profile.name
+                message = "{index}組 【{name}】 {message}".format(index = group_name[index],
+                                                                  name = name,
+                                                                  message = event.message.text)
             else:
-                name = ""
-            index = Group.index(group_id)
-            message = "{index}組 【{name}】 {message}".format(index = group_name[index],
-                                                                                 name = name,
-                                                                                 message = event.message.text)
+                message = "{index}組 {message}".format(index = group_name[index],
+                                                       message = event.message.text)
 
             for group in Group:
                 if group != group_id:
