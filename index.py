@@ -69,7 +69,7 @@ def handel_message(event):
                     timeout=None
                 )
                 profile = responses.Profile.new_from_json_dict(response.json)
-                name = profile.name
+                name = profile.display_name
                 message = "{index}組 【{name}】 {message}".format(index = group_name[index],
                                                                   name = name,
                                                                   message = event.message.text)
