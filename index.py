@@ -28,6 +28,9 @@ try:
     Group2 = []
     Group2.append(os.environ["Group2-1"])
     Group2.append(os.environ["Group2-2"])
+    Group3 = []
+    Group3.append(os.environ["Group3-1"])
+    Group3.append(os.environ["Group3-2"])
 except Exception as e:
     print(e)
 
@@ -109,11 +112,37 @@ def handel_message(event):
                         line_bot_api.push_message(
                                 group,
                                 TextSendMessage(text=message))
+            elif event.source.group_id in Group3:
+                repost(event, Group3)
 
 @handler.default()
 def default(event):
     print("事件:", type(event))
     print(event)
+
+def repost(event, Group):
+    group_id = event.source.group_id
+    index = Group.index(group_id)
+    if event.source.user_id:
+        user_id = event.source.user_id
+        response = line_bot_api._get(
+            '/v2/bot/group/{group_id}/member/{user_id}'.format(group_id=group_id, user_id=user_id),
+            timeout=None
+        )
+        profile = responses.Profile.new_from_json_dict(response.json)
+        name = profile.display_name
+        message = "{index}組 【{name}】 {message}".format(index = group_name[index],
+                                                          name = name,
+                                                          message = event.message.text)
+    else:
+        message = "{index}組 {message}".format(index = group_name[index],
+                                               message = event.message.text)
+
+    for group in Group:
+        if group != group_id:
+            line_bot_api.push_message(
+                    group,
+                    TextSendMessage(text=message))
 
 
 if __name__ == "__main__":
