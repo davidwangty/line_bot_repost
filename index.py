@@ -38,6 +38,22 @@ try:
     Group4 = []
     Group4.append(os.environ["Group4-1"])
     Group4.append(os.environ["Group4-2"])
+     # 公益
+    Group5 = []
+    Group5.append(os.environ["Group5-1"])
+    Group5.append(os.environ["Group5-2"])
+     # 法律
+    Group6 = []
+    Group6.append(os.environ["Group6-1"])
+    Group6.append(os.environ["Group6-2"])
+     # 求職求才
+    Group7 = []
+    Group7.append(os.environ["Group7-1"])
+    Group7.append(os.environ["Group7-2"])
+     # 賣租贈
+    Group8 = []
+    Group8.append(os.environ["Group8-1"])
+    Group8.append(os.environ["Group8-2"])
 except Exception as e:
     print(e)
 
@@ -81,11 +97,17 @@ def handel_message(event):
                 repost(event, Group3)
             elif event.source.group_id in Group4:
                 repost(event, Group4)
-
+            elif event.source.group_id in Group5:
+                repost(event, Group5)
+            elif event.source.group_id in Group6:
+                repost(event, Group6)
+            elif event.source.group_id in Group7:
+                repost(event, Group7)
+            elif event.source.group_id in Group8:
+                repost(event, Group8)
 @handler.default()
 def default(event):
-    print("事件:", type(event))
-    print(event)
+    print("事件:", type(event), "\n", event)
 
 def repost(event, Group):
     group_id = event.source.group_id
