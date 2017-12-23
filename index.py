@@ -48,7 +48,7 @@ try:
     Group6.append(os.environ["Group6-2"])
     # 求職求才
     Group7 = []
-    Group7.append(os.environ["Group7-1"])`
+    Group7.append(os.environ["Group7-1"])
     Group7.append(os.environ["Group7-2"])
     # 賣租贈
     Group8 = []
