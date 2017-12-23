@@ -54,7 +54,7 @@ try:
     Group8 = []
     Group8.append(os.environ["Group8-1"])
     Group8.append(os.environ["Group8-2"])
-    # 賣租贈
+    # 長照養老
     Group9 = []
     Group9.append(os.environ["Group9-1"])
     Group9.append(os.environ["Group9-2"])
