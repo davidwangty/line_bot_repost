@@ -58,6 +58,10 @@ try:
     Group9 = []
     Group9.append(os.environ["Group9-1"])
     Group9.append(os.environ["Group9-2"])
+    # 大學自治
+    Group10 = []
+    Group10.append(os.environ["Group10-1"])
+    Group10.append(os.environ["Group10-2"])
 except Exception as e:
     print(e)
 
@@ -111,6 +115,8 @@ def handel_message(event):
                 repost(event, Group8)
             elif event.source.group_id in Group9:
                 repost(event, Group9)
+            elif event.source.group_id in Group10:
+                repost(event, Group10)
 @handler.default()
 def default(event):
     print("事件:", type(event), "\n", event)
