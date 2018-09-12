@@ -58,10 +58,15 @@ try:
     Group9 = []
     Group9.append(os.environ["Group9-1"])
     Group9.append(os.environ["Group9-2"])
-    # 大學自治
+    # 電影戲劇音樂藝文
     Group10 = []
     Group10.append(os.environ["Group10-1"])
     Group10.append(os.environ["Group10-2"])
+    # 大學自治
+    Group11 = []
+    Group11.append(os.environ["Group11-1"])
+    Group11.append(os.environ["Group11-2"])
+
 except Exception as e:
     print(e)
 
@@ -71,6 +76,7 @@ line_bot_api = LineBotApi(AccessToken)
 handler = WebhookHandler(ChannelSecret)
 
 group_name = ["A", "B", "C"]
+
 
 # Webhook 處理 驗證後交給hander
 @app.route("/callback", methods=['POST'])
@@ -117,9 +123,12 @@ def handel_message(event):
                 repost(event, Group9)
             elif event.source.group_id in Group10:
                 repost(event, Group10)
+
+
 @handler.default()
 def default(event):
     print("事件:", type(event), "\n", event)
+
 
 def repost(event, Group):
     group_id = event.source.group_id
@@ -127,23 +136,30 @@ def repost(event, Group):
     if event.source.user_id:
         user_id = event.source.user_id
         response = line_bot_api._get(
-            '/v2/bot/group/{group_id}/member/{user_id}'.format(group_id=group_id, user_id=user_id),
+            '/v2/bot/group/{group_id}/member/{user_id}'.format(
+                group_id=group_id, user_id=user_id
+            ),
             timeout=None
         )
         profile = responses.Profile.new_from_json_dict(response.json)
         name = profile.display_name
-        message = "{index}組 【{name}】 {message}".format(index = group_name[index],
-                                                          name = name,
-                                                          message = event.message.text)
+        message = "{index}組 【{name}】 {message}".format(
+            index=group_name[index],
+            name=name,
+            message=event.message.text
+        )
     else:
-        message = "{index}組 {message}".format(index = group_name[index],
-                                               message = event.message.text)
+        message = "{index}組 {message}".format(
+            index=group_name[index],
+            message=event.message.text
+        )
 
     for group in Group:
         if group != group_id:
             line_bot_api.push_message(
-                    group,
-                    TextSendMessage(text=message))
+                group,
+                TextSendMessage(text=message)
+            )
 
 
 if __name__ == "__main__":
