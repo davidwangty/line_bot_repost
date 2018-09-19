@@ -123,6 +123,8 @@ def handel_message(event):
                 repost(event, Group9)
             elif event.source.group_id in Group10:
                 repost(event, Group10)
+            elif event.source.group_id in Group11:
+                repost(event, Group11)
 
 
 @handler.default()
