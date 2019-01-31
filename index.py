@@ -34,10 +34,12 @@ try:
     Group3 = []
     Group3.append(os.environ["Group3-1"])
     Group3.append(os.environ["Group3-2"])
+    Group3.append(os.environ["Group3-3"])
     # 商業合作
     Group4 = []
     Group4.append(os.environ["Group4-1"])
     Group4.append(os.environ["Group4-2"])
+    Group4.append(os.environ["Group4-3"])
     # 公益
     Group5 = []
     Group5.append(os.environ["Group5-1"])
